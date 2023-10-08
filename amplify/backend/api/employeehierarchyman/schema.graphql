@@ -1,0 +1,13 @@
+type Employee @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firsName: String!
+  lastName: String!
+  birthDate: String!
+  employeeNumber: String!
+  salary: Float!
+  role: String!
+  reportingLineManager: String
+  avatar: String
+  noManager: Boolean
+}
+ 
