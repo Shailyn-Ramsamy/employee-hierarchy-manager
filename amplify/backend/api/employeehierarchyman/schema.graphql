@@ -6,12 +6,12 @@ type Role @model @auth(rules: [{allow: public}]) {
 
 type Employee @model @auth(rules: [{allow: public}]) {
   id: ID!
-  firsName: String!
+  firstName: String!
   lastName: String!
   birthDate: String!
   employeeNumber: String!
   salary: Float!
-  role: Role!
+  role: String!
   reportingLineManager: String
   avatar: String
   noManager: Boolean

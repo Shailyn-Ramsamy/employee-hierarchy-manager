@@ -41,19 +41,12 @@ export const onCreateEmployee = /* GraphQL */ `
   subscription OnCreateEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
     onCreateEmployee(filter: $filter) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager
@@ -67,19 +60,12 @@ export const onUpdateEmployee = /* GraphQL */ `
   subscription OnUpdateEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
     onUpdateEmployee(filter: $filter) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager
@@ -93,19 +79,12 @@ export const onDeleteEmployee = /* GraphQL */ `
   subscription OnDeleteEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
     onDeleteEmployee(filter: $filter) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager

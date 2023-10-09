@@ -29,22 +29,24 @@ export default function EmployeeCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    firsName: "",
+    firstName: "",
     lastName: "",
     birthDate: "",
     employeeNumber: "",
     salary: "",
+    role: "",
     reportingLineManager: "",
     avatar: "",
     noManager: false,
   };
-  const [firsName, setFirsName] = React.useState(initialValues.firsName);
+  const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
   const [birthDate, setBirthDate] = React.useState(initialValues.birthDate);
   const [employeeNumber, setEmployeeNumber] = React.useState(
     initialValues.employeeNumber
   );
   const [salary, setSalary] = React.useState(initialValues.salary);
+  const [role, setRole] = React.useState(initialValues.role);
   const [reportingLineManager, setReportingLineManager] = React.useState(
     initialValues.reportingLineManager
   );
@@ -52,22 +54,24 @@ export default function EmployeeCreateForm(props) {
   const [noManager, setNoManager] = React.useState(initialValues.noManager);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setFirsName(initialValues.firsName);
+    setFirstName(initialValues.firstName);
     setLastName(initialValues.lastName);
     setBirthDate(initialValues.birthDate);
     setEmployeeNumber(initialValues.employeeNumber);
     setSalary(initialValues.salary);
+    setRole(initialValues.role);
     setReportingLineManager(initialValues.reportingLineManager);
     setAvatar(initialValues.avatar);
     setNoManager(initialValues.noManager);
     setErrors({});
   };
   const validations = {
-    firsName: [{ type: "Required" }],
+    firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
     birthDate: [{ type: "Required" }],
     employeeNumber: [{ type: "Required" }],
     salary: [{ type: "Required" }],
+    role: [{ type: "Required" }],
     reportingLineManager: [],
     avatar: [],
     noManager: [],
@@ -98,11 +102,12 @@ export default function EmployeeCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          firsName,
+          firstName,
           lastName,
           birthDate,
           employeeNumber,
           salary,
+          role,
           reportingLineManager,
           avatar,
           noManager,
@@ -160,35 +165,36 @@ export default function EmployeeCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Firs name"
+        label="First name"
         isRequired={true}
         isReadOnly={false}
-        value={firsName}
+        value={firstName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              firsName: value,
+              firstName: value,
               lastName,
               birthDate,
               employeeNumber,
               salary,
+              role,
               reportingLineManager,
               avatar,
               noManager,
             };
             const result = onChange(modelFields);
-            value = result?.firsName ?? value;
+            value = result?.firstName ?? value;
           }
-          if (errors.firsName?.hasError) {
-            runValidationTasks("firsName", value);
+          if (errors.firstName?.hasError) {
+            runValidationTasks("firstName", value);
           }
-          setFirsName(value);
+          setFirstName(value);
         }}
-        onBlur={() => runValidationTasks("firsName", firsName)}
-        errorMessage={errors.firsName?.errorMessage}
-        hasError={errors.firsName?.hasError}
-        {...getOverrideProps(overrides, "firsName")}
+        onBlur={() => runValidationTasks("firstName", firstName)}
+        errorMessage={errors.firstName?.errorMessage}
+        hasError={errors.firstName?.hasError}
+        {...getOverrideProps(overrides, "firstName")}
       ></TextField>
       <TextField
         label="Last name"
@@ -199,11 +205,12 @@ export default function EmployeeCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName: value,
               birthDate,
               employeeNumber,
               salary,
+              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -230,11 +237,12 @@ export default function EmployeeCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName,
               birthDate: value,
               employeeNumber,
               salary,
+              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -261,11 +269,12 @@ export default function EmployeeCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName,
               birthDate,
               employeeNumber: value,
               salary,
+              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -296,11 +305,12 @@ export default function EmployeeCreateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName,
               birthDate,
               employeeNumber,
               salary: value,
+              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -319,6 +329,38 @@ export default function EmployeeCreateForm(props) {
         {...getOverrideProps(overrides, "salary")}
       ></TextField>
       <TextField
+        label="Role"
+        isRequired={true}
+        isReadOnly={false}
+        value={role}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              birthDate,
+              employeeNumber,
+              salary,
+              role: value,
+              reportingLineManager,
+              avatar,
+              noManager,
+            };
+            const result = onChange(modelFields);
+            value = result?.role ?? value;
+          }
+          if (errors.role?.hasError) {
+            runValidationTasks("role", value);
+          }
+          setRole(value);
+        }}
+        onBlur={() => runValidationTasks("role", role)}
+        errorMessage={errors.role?.errorMessage}
+        hasError={errors.role?.hasError}
+        {...getOverrideProps(overrides, "role")}
+      ></TextField>
+      <TextField
         label="Reporting line manager"
         isRequired={false}
         isReadOnly={false}
@@ -327,11 +369,12 @@ export default function EmployeeCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName,
               birthDate,
               employeeNumber,
               salary,
+              role,
               reportingLineManager: value,
               avatar,
               noManager,
@@ -360,11 +403,12 @@ export default function EmployeeCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName,
               birthDate,
               employeeNumber,
               salary,
+              role,
               reportingLineManager,
               avatar: value,
               noManager,
@@ -391,11 +435,12 @@ export default function EmployeeCreateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              firsName,
+              firstName,
               lastName,
               birthDate,
               employeeNumber,
               salary,
+              role,
               reportingLineManager,
               avatar,
               noManager: value,

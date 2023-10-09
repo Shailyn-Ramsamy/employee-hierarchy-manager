@@ -53,19 +53,12 @@ export const createEmployee = /* GraphQL */ `
   ) {
     createEmployee(input: $input, condition: $condition) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager
@@ -82,19 +75,12 @@ export const updateEmployee = /* GraphQL */ `
   ) {
     updateEmployee(input: $input, condition: $condition) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager
@@ -111,19 +97,12 @@ export const deleteEmployee = /* GraphQL */ `
   ) {
     deleteEmployee(input: $input, condition: $condition) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager

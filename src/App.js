@@ -4,18 +4,18 @@ import "@aws-amplify/ui-react/styles.css";
 import {
     Button,
     Flex,
-    Heading, ScrollView, Table, TableBody, TableCell, TableRow,
+    Heading, ScrollView, SelectField, Table, TableBody, TableCell, TableRow,
     Text,
     TextField,
     View,
     withAuthenticator,
 } from "@aws-amplify/ui-react";
-import { listEmployees } from "./graphql/queries";
+import {listEmployees, listRoles} from "./graphql/queries";
 import {
     createEmployee as createEmployeeMutation,
     deleteEmployee as deleteEmployeeMutation,
 } from "./graphql/mutations";
-import { API } from "aws-amplify";
+import {API, graphqlOperation} from "aws-amplify";
 
 function TableHeader() {
     return (
@@ -35,6 +35,7 @@ const App = ({ signOut }) => {
     const [showOptionsModal, setShowOptionsModal] = useState(false);
     const [showEmployeeModal, setShowEmployeeModal] = useState(false);
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
+    const [roles, setRoles] = useState([]);
 
     const handleOptionsClick = (employeeId) => {
         setSelectedEmployeeId(employeeId);
@@ -56,21 +57,45 @@ const App = ({ signOut }) => {
         setShowEmployeeModal(false);
         // If needed, you can reset the selected employee ID or perform other actions
     };
+
     useEffect(() => {
         fetchEmployees();
+        fetchRoles();
     }, []);
 
+
+    async function fetchRoles() {
+        try {
+            const apiData = await API.graphql({ query: listRoles });
+            const rolesFromAPI = apiData.data.listRoles.items;
+            setRoles(rolesFromAPI);
+        } catch (error) {
+            console.error("Error fetching roles:", error);
+        }
+    }
+
     async function fetchEmployees() {
-        const apiData = await API.graphql({ query: listEmployees });
-        const employeesFromAPI = apiData.data.listEmployees.items;
-        setEmployees(employeesFromAPI);
+        try {
+            const apiData = await API.graphql({ query: listEmployees });
+            console.log("API Data:", apiData);
+
+            if (apiData.errors) {
+                // Log the errors if there are any
+                console.error("GraphQL Errors:", apiData.errors);
+            }
+
+            const employeesFromAPI = apiData.data.listEmployees.items;
+            setEmployees(employeesFromAPI);
+        } catch (error) {
+            console.error("Error fetching employees:", error);
+        }
     }
 
     async function createEmployee(event) {
         event.preventDefault();
         const form = new FormData(event.target);
         const data = {
-            firsName: form.get("firstName"),
+            firstName: form.get("firstName"),
             lastName: form.get("lastName"),
             birthDate: form.get("birthDate"),
             employeeNumber: form.get("employeeNumber"),
@@ -90,12 +115,14 @@ const App = ({ signOut }) => {
         event.target.reset();
     }
 
+    const getRoleNameById = (roleId) => {
+        const role = roles.find((r) => r.id === roleId);
+        return role ? role.name : 'N/A'; // Return 'N/A' if the role is not found
+    };
+
+
 // ...
 
-    useEffect(() => {
-        // Use the fetchEmployees function to fetch the initial list of employees
-        fetchEmployees();
-    }, []);
 
     async function deleteEmployee(id) {
         setShowOptionsModal(false);
@@ -107,6 +134,8 @@ const App = ({ signOut }) => {
             variables: { input: { id } },
         });
     }
+
+
 
 
     return (
@@ -155,14 +184,19 @@ const App = ({ signOut }) => {
                         type="number"
                         required
                     />
-                    <TextField
+                    <SelectField
                         name="role"
-                        placeholder="Role/Position"
                         label="Role/Position"
                         labelHidden
                         variation="quiet"
                         required
-                    />
+                    >
+                        {roles.map((role) => (
+                            <option key={role.id} value={role.id}>
+                                {role.name}
+                            </option>
+                        ))}
+                    </SelectField>
                     <TextField
                         name="reportingLineManager"
                         placeholder="Reporting Line Manager"
@@ -184,8 +218,8 @@ const App = ({ signOut }) => {
                             {employees.map((employee) => (
                                 <TableRow key={employee.id}>
                                     <TableCell className="font-medium">{employee.employeeNumber}</TableCell>
-                                    <TableCell>{employee.firsName} {employee.lastName}</TableCell>
-                                    <TableCell>{employee.role}</TableCell>
+                                    <TableCell>{employee.firstName && employee.lastName ? `${employee.firstName} ${employee.lastName}` : 'N/A'}</TableCell>
+                                    <TableCell>{getRoleNameById(employee.role)}</TableCell>
                                     <TableCell className="text-right">{employee.reportingLineManager}</TableCell>
                                     <TableCell>
                                         {/* Options button for each employee */}
@@ -200,7 +234,6 @@ const App = ({ signOut }) => {
                 </div>
             </ScrollView>
 
-            {/* Modal for options */}
             {showOptionsModal && (
                 <div className="modal">
                     <div className="modal-content">
@@ -211,7 +244,6 @@ const App = ({ signOut }) => {
                         <Button style={{marginTop: 20, marginRight: 10}} onClick={() => deleteEmployee(selectedEmployeeId)}>
                             Delete Employee
                         </Button>
-                        {/* Add your options and actions here */}
                     </div>
                 </div>
             )}

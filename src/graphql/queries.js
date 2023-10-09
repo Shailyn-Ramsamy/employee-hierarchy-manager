@@ -37,19 +37,12 @@ export const getEmployee = /* GraphQL */ `
   query GetEmployee($id: ID!) {
     getEmployee(id: $id) {
       id
-      firsName
+      firstName
       lastName
       birthDate
       employeeNumber
       salary
-      role {
-        id
-        name
-        order
-        createdAt
-        updatedAt
-        __typename
-      }
+      role
       reportingLineManager
       avatar
       noManager
@@ -68,11 +61,12 @@ export const listEmployees = /* GraphQL */ `
     listEmployees(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        firsName
+        firstName
         lastName
         birthDate
         employeeNumber
         salary
+        role
         reportingLineManager
         avatar
         noManager
