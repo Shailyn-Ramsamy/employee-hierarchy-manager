@@ -57,11 +57,22 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.modal-create {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  height: 60%;
+  border-radius: 20px;
+  align-content: center;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 7px solid #888;
   width: 20%;
   height: 30%;
   border-radius: 20px;
@@ -82,14 +93,15 @@
 
 .modal-content2 {
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: 8% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 40%;
-  height: 50%;
+  width: 30%;
+  height: 75%;
   border-radius: 20px;
   align-content: center;
 }
+
 
 .text-left {
   text-align: left;
@@ -101,7 +113,9 @@
 
 .table-container {
   max-height: 600px; /* Adjust the height as needed */
+  max-width: 1920px;
   overflow-y: auto;
+  margin: auto;
   /*padding-left: 120px;*/
   border: 5px solid #ddd;
 }
@@ -120,6 +134,16 @@
   position: sticky;
   top: 0;
   background-color: #f2f2f2;
+}
+
+.button-container {
+  text-align: left; /* Align the button to the left within the container */
+  padding: 20px
+}
+
+/* Style for the button */
+.button-container Button {
+  margin-left: 90px; /* Adjust the right margin as needed */
 }
 
 

@@ -10,10 +10,10 @@ import {
     View,
     withAuthenticator,
 } from "@aws-amplify/ui-react";
-import {listEmployees, listRoles} from "./graphql/queries";
+import {getEmployee, listEmployees, listRoles} from "./graphql/queries";
 import {
     createEmployee as createEmployeeMutation,
-    deleteEmployee as deleteEmployeeMutation,
+    deleteEmployee as deleteEmployeeMutation, updateEmployee,
 } from "./graphql/mutations";
 import {API, graphqlOperation} from "aws-amplify";
 
@@ -34,7 +34,9 @@ const App = ({ signOut }) => {
     const [employees, setEmployees] = useState([]);
     const [showOptionsModal, setShowOptionsModal] = useState(false);
     const [showEmployeeModal, setShowEmployeeModal] = useState(false);
+    const [showEmployeeCreateModal, setShowEmployeeCreateModal] = useState(false);
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
+    const [selectedEmployeeData, setSelectedEmployeeData] = useState(null);
     const [roles, setRoles] = useState([]);
 
     const handleOptionsClick = (employeeId) => {
@@ -47,15 +49,35 @@ const App = ({ signOut }) => {
         // If needed, you can reset the selected employee ID or perform other actions
     };
 
-    const handleEmployeeClick = (employeeId) => {
+    const handleEmployeeCreateClick = (employeeId) => {
+        setShowEmployeeCreateModal(true);
+    };
+
+    const closeEmployeeCreateModal = () => {
+        setShowEmployeeCreateModal(false);
+        // If needed, you can reset the selected employee ID or perform other actions
+    };
+
+    const handleEmployeeClick = async (employeeId) => {
         setSelectedEmployeeId(employeeId);
         setShowEmployeeModal(true);
         setShowOptionsModal(false);
+
+        try {
+            const apiData = await API.graphql({
+                query: getEmployee, // Assume you have a query named getEmployee to fetch individual employee details
+                variables: { id: employeeId },
+            });
+
+            const employeeData = apiData.data.getEmployee; // Adjust this based on your actual GraphQL schema
+            setSelectedEmployeeData(employeeData);
+        } catch (error) {
+            console.error("Error fetching employee details:", error);
+        }
     };
 
     const closeEmployeeModal = () => {
         setShowEmployeeModal(false);
-        // If needed, you can reset the selected employee ID or perform other actions
     };
 
     useEffect(() => {
@@ -92,6 +114,7 @@ const App = ({ signOut }) => {
     }
 
     async function createEmployee(event) {
+        setShowEmployeeCreateModal(false);
         event.preventDefault();
         const form = new FormData(event.target);
         const data = {
@@ -135,81 +158,71 @@ const App = ({ signOut }) => {
         });
     }
 
+    const UpdateField = ({ label, value, onUpdate }) => {
+        const [editing, setEditing] = useState(false);
+        const [newValue, setNewValue] = useState(value);
+
+        const handleUpdate = () => {
+            onUpdate(newValue);
+            setEditing(false);
+        };
+
+        return (
+            <div style={{ marginBottom: 10 }}>
+                <p>{label}: {editing ? <input type="text" value={newValue} onChange={(e) => setNewValue(e.target.value)} /> : value}</p>
+                {editing ? (
+                    <>
+                        <button onClick={handleUpdate}>Save</button>
+                        <button onClick={() => { setEditing(false); setNewValue(value); }}>Cancel</button>
+                    </>
+                ) : (
+                    <button onClick={() => setEditing(true)}>Edit</button>
+                )}
+            </div>
+        );
+    };
+
+    const handleUpdate = async (field, value) => {
+        try {
+            console.log(`Updating ${field} to ${value} for employee ${selectedEmployeeId}`);
+
+            const input = {
+                id: selectedEmployeeId,
+                [field]: value,
+            };
+
+            await API.graphql({
+                query: updateEmployee,
+                variables: { input },
+            });
+
+            const updatedEmployeeData = await API.graphql({
+                query: getEmployee,
+                variables: { id: selectedEmployeeId },
+            });
+
+            const updatedEmployee = updatedEmployeeData.data.getEmployee;
+
+            setSelectedEmployeeData(updatedEmployee);
+
+            console.log('Update successful');
+
+            // Refetch the updated employee data
+            fetchEmployees();
+        } catch (error) {
+            console.error(`Error updating ${field}:`, error);
+        }
+    };
 
 
 
     return (
         <View className="App">
             <Heading level={1}>Employee Management System</Heading>
-            <View as="form" margin="3rem 0" onSubmit={createEmployee}>
-                <Flex direction="row" justifyContent="center">
-                    <TextField
-                        name="firstName"
-                        placeholder="First Name"
-                        label="First Name"
-                        labelHidden
-                        variation="quiet"
-                        required
-                    />
-                    <TextField
-                        name="lastName"
-                        placeholder="Last Name"
-                        label="Last Name"
-                        labelHidden
-                        variation="quiet"
-                        required
-                    />
-                    <TextField
-                        name="birthDate"
-                        placeholder="Birth Date"
-                        label="Birth Date"
-                        labelHidden
-                        variation="quiet"
-                        required
-                    />
-                    <TextField
-                        name="employeeNumber"
-                        placeholder="Employee Number"
-                        label="Employee Number"
-                        labelHidden
-                        variation="quiet"
-                        required
-                    />
-                    <TextField
-                        name="salary"
-                        placeholder="Salary"
-                        label="Salary"
-                        labelHidden
-                        variation="quiet"
-                        type="number"
-                        required
-                    />
-                    <SelectField
-                        name="role"
-                        label="Role/Position"
-                        labelHidden
-                        variation="quiet"
-                        required
-                    >
-                        {roles.map((role) => (
-                            <option key={role.id} value={role.id}>
-                                {role.name}
-                            </option>
-                        ))}
-                    </SelectField>
-                    <TextField
-                        name="reportingLineManager"
-                        placeholder="Reporting Line Manager"
-                        label="Reporting Line Manager"
-                        labelHidden
-                        variation="quiet"
-                    />
-                    <Button type="submit" variation="primary">
-                        Create Employee
-                    </Button>
-                </Flex>
-            </View>
             <Heading level={2}>Current Employees</Heading>
+            <div className="button-container">
+                <Button variation="primary" onClick={handleEmployeeCreateClick}>Add Employee</Button>
+            </div>
             <ScrollView>
                 <div className="table-container">
                     <Table>
@@ -222,10 +235,9 @@ const App = ({ signOut }) => {
                                     <TableCell>{getRoleNameById(employee.role)}</TableCell>
                                     <TableCell className="text-right">{employee.reportingLineManager}</TableCell>
                                     <TableCell>
-                                        {/* Options button for each employee */}
-                                        <Button onClick={() => handleOptionsClick(employee.id)}>
+                                        <button onClick={() => handleOptionsClick(employee.id)}>
                                             &hellip;
-                                        </Button>
+                                        </button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -238,8 +250,11 @@ const App = ({ signOut }) => {
                 <div className="modal">
                     <div className="modal-content">
                         <span className="close" onClick={closeOptionsModal}>&times;</span>
-                        <Button style={{marginTop: 70}} onClick={() => handleEmployeeClick(selectedEmployeeId)}>
-                            View Employee Data
+                        <div>
+                            <p style={{fontWeight: "bold", fontSize: 20}}>Options</p>
+                        </div>
+                        <Button style={{marginTop: 20}} onClick={() => handleEmployeeClick(selectedEmployeeId)}>
+                            View/Update Employee Data
                         </Button>
                         <Button style={{marginTop: 20, marginRight: 10}} onClick={() => deleteEmployee(selectedEmployeeId)}>
                             Delete Employee
@@ -248,10 +263,135 @@ const App = ({ signOut }) => {
                 </div>
             )}
 
+            {showEmployeeCreateModal && (
+                <div className="modal">
+                    <div className="modal-create">
+                        <span className="close" onClick={closeEmployeeCreateModal}>&times;</span>
+                        <div>
+                            <p style={{fontWeight: "bold", fontSize: 30, marginTop:30}}>Create Employee</p>
+                        </div>
+                        <div>
+                            <View as="form" margin="3rem 0" onSubmit={createEmployee}>
+                                <Flex direction="column" justifyContent="center">
+                                    <TextField
+                                        name="firstName"
+                                        placeholder="First Name"
+                                        label="First Name"
+                                        labelHidden
+                                        variation="quiet"
+                                        required
+                                    />
+                                    <TextField
+                                        name="lastName"
+                                        placeholder="Last Name"
+                                        label="Last Name"
+                                        labelHidden
+                                        variation="quiet"
+                                        required
+                                    />
+                                    <TextField
+                                        name="birthDate"
+                                        placeholder="Birth Date"
+                                        label="Birth Date"
+                                        labelHidden
+                                        variation="quiet"
+                                        required
+                                    />
+                                    <TextField
+                                        name="employeeNumber"
+                                        placeholder="Employee Number"
+                                        label="Employee Number"
+                                        labelHidden
+                                        variation="quiet"
+                                        required
+                                    />
+                                    <TextField
+                                        name="salary"
+                                        placeholder="Salary"
+                                        label="Salary"
+                                        labelHidden
+                                        variation="quiet"
+                                        type="number"
+                                        required
+                                    />
+                                    <SelectField
+                                        name="role"
+                                        label="Role/Position"
+                                        labelHidden
+                                        variation="quiet"
+                                        required
+                                    >
+                                        {roles.map((role) => (
+                                            <option key={role.id} value={role.id}>
+                                                {role.name}
+                                            </option>
+                                        ))}
+                                    </SelectField>
+                                    <TextField
+                                        name="reportingLineManager"
+                                        placeholder="Reporting Line Manager"
+                                        label="Reporting Line Manager"
+                                        labelHidden
+                                        variation="quiet"
+                                    />
+                                    <Button type="submit" variation="primary">
+                                        Create Employee
+                                    </Button>
+                                </Flex>
+                            </View>
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
             {showEmployeeModal && (
                 <div className="modal2">
-                    <div className="modal-content2">
+                    <div className="modal-content2" style={{ textAlign: 'left' }}>
                         <span className="close" onClick={closeEmployeeModal}>&times;</span>
+                        <div style={{marginTop:20}}>
+                            <p style={{fontWeight: "bold", fontSize: 30}}>Update Employee Information</p>
+                        </div>
+                        {selectedEmployeeData && (
+                            <div style={{ marginTop: 20 }}>
+                                <UpdateField
+                                    label="First Name"
+                                    value={`${selectedEmployeeData.firstName}`}
+                                    onUpdate={(value) => handleUpdate('firstName', value)}
+                                />
+                                <UpdateField
+                                    label="First Name"
+                                    value={`${selectedEmployeeData.lastName}`}
+                                    onUpdate={(value) => handleUpdate('lastName', value)}
+                                />
+                                <UpdateField
+                                    label="Employee Number"
+                                    value={selectedEmployeeData.employeeNumber}
+                                    onUpdate={(value) => handleUpdate('employeeNumber', value)}
+                                />
+                                <UpdateField
+                                    label="Birth Date"
+                                    value={selectedEmployeeData.birthDate}
+                                    onUpdate={(value) => handleUpdate('birthDate', value)}
+                                />
+                                <UpdateField
+                                    label="Salary"
+                                    value={selectedEmployeeData.salary}
+                                    onUpdate={(value) => handleUpdate('salary', value)}
+                                />
+                                <UpdateField
+                                    label="Role"
+                                    value={getRoleNameById(selectedEmployeeData.role)}
+                                    onUpdate={(value) => handleUpdate('role', value)}
+                                />
+                                <UpdateField
+                                    label="Reporting Line Manager"
+                                    value={selectedEmployeeData.reportingLineManager}
+                                    onUpdate={(value) => handleUpdate('reportingLineManager', value)}
+                                />
+                                {/* Add more fields as needed */}
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
