@@ -18,7 +18,6 @@ export declare type EmployeeUpdateFormInputValues = {
     birthDate?: string;
     employeeNumber?: string;
     salary?: number;
-    role?: string;
     reportingLineManager?: string;
     avatar?: string;
     noManager?: boolean;
@@ -29,7 +28,6 @@ export declare type EmployeeUpdateFormValidationValues = {
     birthDate?: ValidationFunction<string>;
     employeeNumber?: ValidationFunction<string>;
     salary?: ValidationFunction<number>;
-    role?: ValidationFunction<string>;
     reportingLineManager?: ValidationFunction<string>;
     avatar?: ValidationFunction<string>;
     noManager?: ValidationFunction<boolean>;
@@ -42,7 +40,6 @@ export declare type EmployeeUpdateFormOverridesProps = {
     birthDate?: PrimitiveOverrideProps<TextFieldProps>;
     employeeNumber?: PrimitiveOverrideProps<TextFieldProps>;
     salary?: PrimitiveOverrideProps<TextFieldProps>;
-    role?: PrimitiveOverrideProps<TextFieldProps>;
     reportingLineManager?: PrimitiveOverrideProps<TextFieldProps>;
     avatar?: PrimitiveOverrideProps<TextFieldProps>;
     noManager?: PrimitiveOverrideProps<SwitchFieldProps>;

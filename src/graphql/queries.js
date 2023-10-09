@@ -1,6 +1,38 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getRole = /* GraphQL */ `
+  query GetRole($id: ID!) {
+    getRole(id: $id) {
+      id
+      name
+      order
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listRoles = /* GraphQL */ `
+  query ListRoles(
+    $filter: ModelRoleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRoles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        order
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const getEmployee = /* GraphQL */ `
   query GetEmployee($id: ID!) {
     getEmployee(id: $id) {
@@ -10,7 +42,14 @@ export const getEmployee = /* GraphQL */ `
       birthDate
       employeeNumber
       salary
-      role
+      role {
+        id
+        name
+        order
+        createdAt
+        updatedAt
+        __typename
+      }
       reportingLineManager
       avatar
       noManager
@@ -34,7 +73,6 @@ export const listEmployees = /* GraphQL */ `
         birthDate
         employeeNumber
         salary
-        role
         reportingLineManager
         avatar
         noManager

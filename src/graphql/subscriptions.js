@@ -1,6 +1,42 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateRole = /* GraphQL */ `
+  subscription OnCreateRole($filter: ModelSubscriptionRoleFilterInput) {
+    onCreateRole(filter: $filter) {
+      id
+      name
+      order
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateRole = /* GraphQL */ `
+  subscription OnUpdateRole($filter: ModelSubscriptionRoleFilterInput) {
+    onUpdateRole(filter: $filter) {
+      id
+      name
+      order
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteRole = /* GraphQL */ `
+  subscription OnDeleteRole($filter: ModelSubscriptionRoleFilterInput) {
+    onDeleteRole(filter: $filter) {
+      id
+      name
+      order
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onCreateEmployee = /* GraphQL */ `
   subscription OnCreateEmployee($filter: ModelSubscriptionEmployeeFilterInput) {
     onCreateEmployee(filter: $filter) {
@@ -10,7 +46,14 @@ export const onCreateEmployee = /* GraphQL */ `
       birthDate
       employeeNumber
       salary
-      role
+      role {
+        id
+        name
+        order
+        createdAt
+        updatedAt
+        __typename
+      }
       reportingLineManager
       avatar
       noManager
@@ -29,7 +72,14 @@ export const onUpdateEmployee = /* GraphQL */ `
       birthDate
       employeeNumber
       salary
-      role
+      role {
+        id
+        name
+        order
+        createdAt
+        updatedAt
+        __typename
+      }
       reportingLineManager
       avatar
       noManager
@@ -48,7 +98,14 @@ export const onDeleteEmployee = /* GraphQL */ `
       birthDate
       employeeNumber
       salary
-      role
+      role {
+        id
+        name
+        order
+        createdAt
+        updatedAt
+        __typename
+      }
       reportingLineManager
       avatar
       noManager

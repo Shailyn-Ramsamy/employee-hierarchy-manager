@@ -16,7 +16,6 @@ import {
     deleteEmployee as deleteEmployeeMutation,
 } from "./graphql/mutations";
 import { API } from "aws-amplify";
-import * as PropTypes from "prop-types";
 
 function TableHeader() {
     return (

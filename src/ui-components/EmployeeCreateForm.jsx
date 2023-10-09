@@ -34,7 +34,6 @@ export default function EmployeeCreateForm(props) {
     birthDate: "",
     employeeNumber: "",
     salary: "",
-    role: "",
     reportingLineManager: "",
     avatar: "",
     noManager: false,
@@ -46,7 +45,6 @@ export default function EmployeeCreateForm(props) {
     initialValues.employeeNumber
   );
   const [salary, setSalary] = React.useState(initialValues.salary);
-  const [role, setRole] = React.useState(initialValues.role);
   const [reportingLineManager, setReportingLineManager] = React.useState(
     initialValues.reportingLineManager
   );
@@ -59,7 +57,6 @@ export default function EmployeeCreateForm(props) {
     setBirthDate(initialValues.birthDate);
     setEmployeeNumber(initialValues.employeeNumber);
     setSalary(initialValues.salary);
-    setRole(initialValues.role);
     setReportingLineManager(initialValues.reportingLineManager);
     setAvatar(initialValues.avatar);
     setNoManager(initialValues.noManager);
@@ -71,7 +68,6 @@ export default function EmployeeCreateForm(props) {
     birthDate: [{ type: "Required" }],
     employeeNumber: [{ type: "Required" }],
     salary: [{ type: "Required" }],
-    role: [{ type: "Required" }],
     reportingLineManager: [],
     avatar: [],
     noManager: [],
@@ -107,7 +103,6 @@ export default function EmployeeCreateForm(props) {
           birthDate,
           employeeNumber,
           salary,
-          role,
           reportingLineManager,
           avatar,
           noManager,
@@ -178,7 +173,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -210,7 +204,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -242,7 +235,6 @@ export default function EmployeeCreateForm(props) {
               birthDate: value,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -274,7 +266,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber: value,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -310,7 +301,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber,
               salary: value,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -329,38 +319,6 @@ export default function EmployeeCreateForm(props) {
         {...getOverrideProps(overrides, "salary")}
       ></TextField>
       <TextField
-        label="Role"
-        isRequired={true}
-        isReadOnly={false}
-        value={role}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firsName,
-              lastName,
-              birthDate,
-              employeeNumber,
-              salary,
-              role: value,
-              reportingLineManager,
-              avatar,
-              noManager,
-            };
-            const result = onChange(modelFields);
-            value = result?.role ?? value;
-          }
-          if (errors.role?.hasError) {
-            runValidationTasks("role", value);
-          }
-          setRole(value);
-        }}
-        onBlur={() => runValidationTasks("role", role)}
-        errorMessage={errors.role?.errorMessage}
-        hasError={errors.role?.hasError}
-        {...getOverrideProps(overrides, "role")}
-      ></TextField>
-      <TextField
         label="Reporting line manager"
         isRequired={false}
         isReadOnly={false}
@@ -374,7 +332,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager: value,
               avatar,
               noManager,
@@ -408,7 +365,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar: value,
               noManager,
@@ -440,7 +396,6 @@ export default function EmployeeCreateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager: value,

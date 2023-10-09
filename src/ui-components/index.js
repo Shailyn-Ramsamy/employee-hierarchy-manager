@@ -6,4 +6,6 @@
 
 export { default as EmployeeCreateForm } from "./EmployeeCreateForm";
 export { default as EmployeeUpdateForm } from "./EmployeeUpdateForm";
+export { default as RoleCreateForm } from "./RoleCreateForm";
+export { default as RoleUpdateForm } from "./RoleUpdateForm";
 export { default as studioTheme } from "./studioTheme";

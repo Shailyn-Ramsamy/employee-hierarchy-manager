@@ -36,7 +36,6 @@ export default function EmployeeUpdateForm(props) {
     birthDate: "",
     employeeNumber: "",
     salary: "",
-    role: "",
     reportingLineManager: "",
     avatar: "",
     noManager: false,
@@ -48,7 +47,6 @@ export default function EmployeeUpdateForm(props) {
     initialValues.employeeNumber
   );
   const [salary, setSalary] = React.useState(initialValues.salary);
-  const [role, setRole] = React.useState(initialValues.role);
   const [reportingLineManager, setReportingLineManager] = React.useState(
     initialValues.reportingLineManager
   );
@@ -64,7 +62,6 @@ export default function EmployeeUpdateForm(props) {
     setBirthDate(cleanValues.birthDate);
     setEmployeeNumber(cleanValues.employeeNumber);
     setSalary(cleanValues.salary);
-    setRole(cleanValues.role);
     setReportingLineManager(cleanValues.reportingLineManager);
     setAvatar(cleanValues.avatar);
     setNoManager(cleanValues.noManager);
@@ -92,7 +89,6 @@ export default function EmployeeUpdateForm(props) {
     birthDate: [{ type: "Required" }],
     employeeNumber: [{ type: "Required" }],
     salary: [{ type: "Required" }],
-    role: [{ type: "Required" }],
     reportingLineManager: [],
     avatar: [],
     noManager: [],
@@ -128,7 +124,6 @@ export default function EmployeeUpdateForm(props) {
           birthDate,
           employeeNumber,
           salary,
-          role,
           reportingLineManager: reportingLineManager ?? null,
           avatar: avatar ?? null,
           noManager: noManager ?? null,
@@ -197,7 +192,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -229,7 +223,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -261,7 +254,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate: value,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -293,7 +285,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber: value,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -329,7 +320,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber,
               salary: value,
-              role,
               reportingLineManager,
               avatar,
               noManager,
@@ -348,38 +338,6 @@ export default function EmployeeUpdateForm(props) {
         {...getOverrideProps(overrides, "salary")}
       ></TextField>
       <TextField
-        label="Role"
-        isRequired={true}
-        isReadOnly={false}
-        value={role}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firsName,
-              lastName,
-              birthDate,
-              employeeNumber,
-              salary,
-              role: value,
-              reportingLineManager,
-              avatar,
-              noManager,
-            };
-            const result = onChange(modelFields);
-            value = result?.role ?? value;
-          }
-          if (errors.role?.hasError) {
-            runValidationTasks("role", value);
-          }
-          setRole(value);
-        }}
-        onBlur={() => runValidationTasks("role", role)}
-        errorMessage={errors.role?.errorMessage}
-        hasError={errors.role?.hasError}
-        {...getOverrideProps(overrides, "role")}
-      ></TextField>
-      <TextField
         label="Reporting line manager"
         isRequired={false}
         isReadOnly={false}
@@ -393,7 +351,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager: value,
               avatar,
               noManager,
@@ -427,7 +384,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar: value,
               noManager,
@@ -459,7 +415,6 @@ export default function EmployeeUpdateForm(props) {
               birthDate,
               employeeNumber,
               salary,
-              role,
               reportingLineManager,
               avatar,
               noManager: value,
