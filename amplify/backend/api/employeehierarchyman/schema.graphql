@@ -4,7 +4,6 @@ type Role @model @auth(rules: [{allow: public}]) {
   order: Int!
 }
 
-
 type Employee @model @auth(rules: [{allow: public}]) {
   id: ID!
   firstName: String!
@@ -13,7 +12,9 @@ type Employee @model @auth(rules: [{allow: public}]) {
   employeeNumber: String!
   salary: Float!
   role: String!
-  reportingLineManager: String # Change the type to Employee
+  reportingLineManager: String
   avatar: String
   noManager: Boolean
+  email: AWSEmail!
 }
+ 

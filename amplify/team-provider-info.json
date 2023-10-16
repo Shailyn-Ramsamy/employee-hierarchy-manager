@@ -17,6 +17,9 @@
       },
       "auth": {
         "employeehierarchyman93c85e9a": {}
+      },
+      "storage": {
+        "s3employeehierarchymanstorage94162aaa": {}
       }
     }
   }

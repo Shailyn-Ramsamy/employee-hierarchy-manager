@@ -91,11 +91,11 @@ video {
 
 .modal-create {
   background-color: #fefefe;
-  margin: 10% auto;
+  margin: 7% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 40%;
-  height: 60%;
+  height: 75%;
   border-radius: 20px;
   align-content: center;
 }
@@ -129,7 +129,7 @@ video {
   padding: 20px;
   border: 1px solid #888;
   width: 30%;
-  height: 75%;
+  height: 65%;
   border-radius: 20px;
   align-content: center;
 }
@@ -176,6 +176,10 @@ video {
 /* Style for the button */
 .button-container Button {
   margin-left: 90px; /* Adjust the right margin as needed */
+}
+
+.tree-page{
+
 }
 
 

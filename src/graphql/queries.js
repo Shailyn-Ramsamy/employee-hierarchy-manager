@@ -46,6 +46,7 @@ export const getEmployee = /* GraphQL */ `
       reportingLineManager
       avatar
       noManager
+      email
       createdAt
       updatedAt
       __typename
@@ -70,6 +71,7 @@ export const listEmployees = /* GraphQL */ `
         reportingLineManager
         avatar
         noManager
+        email
         createdAt
         updatedAt
         __typename

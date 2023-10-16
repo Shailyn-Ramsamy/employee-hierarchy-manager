@@ -50,6 +50,7 @@ export const onCreateEmployee = /* GraphQL */ `
       reportingLineManager
       avatar
       noManager
+      email
       createdAt
       updatedAt
       __typename
@@ -69,6 +70,7 @@ export const onUpdateEmployee = /* GraphQL */ `
       reportingLineManager
       avatar
       noManager
+      email
       createdAt
       updatedAt
       __typename
@@ -88,6 +90,7 @@ export const onDeleteEmployee = /* GraphQL */ `
       reportingLineManager
       avatar
       noManager
+      email
       createdAt
       updatedAt
       __typename

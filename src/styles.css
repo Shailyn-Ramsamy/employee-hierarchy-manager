@@ -14,7 +14,6 @@
     margin: 0;
     width: 100%;
     min-width: 1024px;
-    height: 48px;
     max-height: 44px;
     background: rgba(221, 221, 221, 0.92);
     font-size: 17px;
@@ -68,8 +67,8 @@ body {
 
 /* Add the following styles to make the tree scrollable if it overflows the viewport */
 .org-tree-container {
-    overflow: auto;
-    max-height: 100vh; /* Adjust as needed */
+    height: 1000px; /* Adjust as needed */
+    max-height: 100vh;
 }
 
 .org-tree li {

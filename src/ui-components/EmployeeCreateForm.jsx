@@ -38,6 +38,7 @@ export default function EmployeeCreateForm(props) {
     reportingLineManager: "",
     avatar: "",
     noManager: false,
+    email: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -52,6 +53,7 @@ export default function EmployeeCreateForm(props) {
   );
   const [avatar, setAvatar] = React.useState(initialValues.avatar);
   const [noManager, setNoManager] = React.useState(initialValues.noManager);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
@@ -63,6 +65,7 @@ export default function EmployeeCreateForm(props) {
     setReportingLineManager(initialValues.reportingLineManager);
     setAvatar(initialValues.avatar);
     setNoManager(initialValues.noManager);
+    setEmail(initialValues.email);
     setErrors({});
   };
   const validations = {
@@ -75,6 +78,7 @@ export default function EmployeeCreateForm(props) {
     reportingLineManager: [],
     avatar: [],
     noManager: [],
+    email: [{ type: "Required" }, { type: "Email" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -111,6 +115,7 @@ export default function EmployeeCreateForm(props) {
           reportingLineManager,
           avatar,
           noManager,
+          email,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -182,6 +187,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -214,6 +220,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -246,6 +253,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.birthDate ?? value;
@@ -278,6 +286,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.employeeNumber ?? value;
@@ -314,6 +323,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.salary ?? value;
@@ -346,6 +356,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.role ?? value;
@@ -378,6 +389,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager: value,
               avatar,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.reportingLineManager ?? value;
@@ -412,6 +424,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar: value,
               noManager,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.avatar ?? value;
@@ -444,6 +457,7 @@ export default function EmployeeCreateForm(props) {
               reportingLineManager,
               avatar,
               noManager: value,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.noManager ?? value;
@@ -458,6 +472,39 @@ export default function EmployeeCreateForm(props) {
         hasError={errors.noManager?.hasError}
         {...getOverrideProps(overrides, "noManager")}
       ></SwitchField>
+      <TextField
+        label="Email"
+        isRequired={true}
+        isReadOnly={false}
+        value={email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              birthDate,
+              employeeNumber,
+              salary,
+              role,
+              reportingLineManager,
+              avatar,
+              noManager,
+              email: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.email ?? value;
+          }
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
+          }
+          setEmail(value);
+        }}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

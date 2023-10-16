@@ -22,6 +22,7 @@ export declare type EmployeeUpdateFormInputValues = {
     reportingLineManager?: string;
     avatar?: string;
     noManager?: boolean;
+    email?: string;
 };
 export declare type EmployeeUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -33,6 +34,7 @@ export declare type EmployeeUpdateFormValidationValues = {
     reportingLineManager?: ValidationFunction<string>;
     avatar?: ValidationFunction<string>;
     noManager?: ValidationFunction<boolean>;
+    email?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type EmployeeUpdateFormOverridesProps = {
@@ -46,6 +48,7 @@ export declare type EmployeeUpdateFormOverridesProps = {
     reportingLineManager?: PrimitiveOverrideProps<TextFieldProps>;
     avatar?: PrimitiveOverrideProps<TextFieldProps>;
     noManager?: PrimitiveOverrideProps<SwitchFieldProps>;
+    email?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type EmployeeUpdateFormProps = React.PropsWithChildren<{
     overrides?: EmployeeUpdateFormOverridesProps | undefined | null;

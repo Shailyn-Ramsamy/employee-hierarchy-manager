@@ -1,0 +1,10 @@
+{
+  "resourceName": "s3employeehierarchymanstorage94162aaa",
+  "bucketName": "employeehierarchyman-storage-94162aaa",
+  "policyUUID": "790e05bd",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ"
+  ]
+}

@@ -1,57 +1,50 @@
 [
   {
-    "name": "Root",
+    "id": "300a9c67-9cee-46b7-bf68-1aff4d9fa14b",
+    "firstName": "Shailyn",
+    "lastName": "Ramsamy",
+    "birthDate": "10/06/2002",
+    "employeeNumber": "1",
+    "salary": 1000000,
+    "role": "f056cffb-f7ad-4368-b497-24e66e30f5c2",
+    "reportingLineManager": null,
+    "avatar": null,
+    "noManager": null,
+    "createdAt": "2023-10-10T17:29:20.900Z",
+    "updatedAt": "2023-10-10T17:29:20.900Z",
+    "__typename": "Employee",
     "children": [
       {
-        "name": "Child 1",
-        "children": [
-          {
-            "name": "Grand Child"
-          }
-        ]
+        "id": "3d50c007-abd1-437d-82af-fb6e002d9494",
+        "firstName": "Karishma",
+        "lastName": "Lakhoo",
+        "birthDate": "30/07/2000",
+        "employeeNumber": "2",
+        "salary": 100000,
+        "role": "63eb7eb7-da4f-451d-afe4-aa403777f2d4",
+        "reportingLineManager": "300a9c67-9cee-46b7-bf68-1aff4d9fa14b",
+        "avatar": null,
+        "noManager": null,
+        "createdAt": "2023-10-10T18:05:02.628Z",
+        "updatedAt": "2023-10-10T18:05:02.628Z",
+        "__typename": "Employee",
+        "children": []
       },
       {
-        "name": "Child 2",
-        "children": [
-          {
-            "name": "Grand Child",
-            "children": [
-              {
-                "name": "Great Grand Child 1",
-                "children": [
-                  {
-                    "name": "Great Grand Child 1"
-                  },
-                  {
-                    "name": "Grand Grand Child 2",
-                    "children": [
-                      {
-                        "name": "Great Grand Child 1"
-                      },
-                      {
-                        "name": "Grand Grand Child 2",
-                        "children": [
-                          {
-                            "name": "Great Grand Child 1"
-                          },
-                          {
-                            "name": "Grand Grand Child 2"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "name": "Grand Grand Child 2"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "Child 2"
+        "id": "489c4976-1833-403f-b751-0bccef66fd23",
+        "firstName": "John",
+        "lastName": "Doe",
+        "birthDate": "10/06/2002",
+        "employeeNumber": "3",
+        "salary": 1000000,
+        "role": "0ef42821-5d8d-4787-97dd-5528e66945fb",
+        "reportingLineManager": "300a9c67-9cee-46b7-bf68-1aff4d9fa14b",
+        "avatar": null,
+        "noManager": null,
+        "createdAt": "2023-10-10T18:13:05.140Z",
+        "updatedAt": "2023-10-10T18:13:05.140Z",
+        "__typename": "Employee",
+        "children": []
       }
     ]
   }
