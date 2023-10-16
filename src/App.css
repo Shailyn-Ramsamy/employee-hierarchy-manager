@@ -35,7 +35,7 @@ svg {
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;  /* Change to min-height or remove */
   padding: 0 50px 150px;
   text-align: center;
   box-sizing: border-box;
